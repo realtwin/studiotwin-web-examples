@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Stillwater — Made with StudioTwin MCP</title>
+<link rel="canonical" href="https://stillwater-studiotwin.surge.sh/" />
+<meta name="description" content="A blue-hour cypress swamp, conjured end-to-end by Claude Opus driving StudioTwin MCP: concepts, sky, meshes, materials and sound. Scroll the story, then take the helm." />
+<meta property="og:title" content="Stillwater — Made with StudioTwin MCP" />
+<meta property="og:description" content="Scroll the story of how an AI agent built a swamp with StudioTwin MCP — then paddle it yourself." />
+<meta property="og:image" content="https://stillwater-studiotwin.surge.sh/img/og.jpg" />
+<meta property="og:url" content="https://stillwater-studiotwin.surge.sh/" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 12c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 18c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 24c4-3 6 3 10 0s6-3 10 0 4 3 6 1' fill='none' stroke='%23cfe3da' stroke-width='2'/%3E%3C/svg%3E" />
+</head>
+<body class="loading">
+  <canvas id="gl"></canvas>
+  <div class="vfade"></div>
+
+  <!-- ============ LOADER ============ -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="mark"><svg viewBox="0 0 32 32"><path d="M3 12c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 18c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 24c4-3 6 3 10 0s6-3 10 0 4 3 6 1"/></svg></div>
+      <div class="kicker">Stillwater</div>
+      <div class="loader-title">Gathering the swamp</div>
+      <div class="bar"><i id="loadbar"></i></div>
+      <div class="loader-meta"><span id="loadlabel">concepts · sky · meshes · materials · sound</span><span id="loadpct">0%</span></div>
+    </div>
+  </div>
+
+  <!-- ============ TOP CHROME ============ -->
+  <header id="chrome">
+    <a class="brand" href="#top" data-top><svg viewBox="0 0 32 32"><path d="M3 12c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 18c4-3 6 3 10 0s6-3 10 0 4 3 6 1M3 24c4-3 6 3 10 0s6-3 10 0 4 3 6 1"/></svg><span>Stillwater</span></a>
+    <div class="status"><span class="dot"></span><span id="region">The Deep Swamp</span><span class="sep">/</span><span id="clock">19:26</span></div>
+    <div class="tools">
+      <button id="btn-sound" class="icon" title="Sound (M)" aria-label="Toggle sound"><svg viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4z"/><path class="wave" d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11"/><path class="mute" d="M16 9l5 6M21 9l-5 6"/></svg></button>
+      <a id="btn-journal" class="icon journal-icon" href="journal.html" title="Production journal: how this was made" aria-label="Open the production journal"><svg viewBox="0 0 24 24"><path d="M12 6.5C10 5 7 4.6 3.5 5v13c3.5-.4 6.5 0 8.5 1.5 2-1.5 5-1.9 8.5-1.5V5C17 4.6 14 5 12 6.5z"/><path d="M12 6.5v13"/><path d="M6 8.6c1.6-.1 3 .1 4 .6M6 11.6c1.6-.1 3 .1 4 .6M14 9.2c1-.5 2.4-.7 4-.6"/></svg><span class="pip"></span></a>
+      <button id="btn-gfx" class="gfx" title="Graphics quality (G)" aria-label="Graphics quality"><span id="gfx-label">High</span></button>
+      <a class="st-lockup" href="https://studiotwin.ai/mcp" target="_blank" rel="noopener" title="StudioTwin MCP (opens studiotwin.ai/mcp)"><img src="img/studiotwin-mcp.svg" alt="" width="22" height="22"><span>StudioTwin <b>MCP</b></span><i>↗</i></a>
+    </div>
+  </header>
+
+  <!-- ============ STORY ============ -->
+  <main id="story">
+    <section class="chapter hero" data-ch="0" id="top">
+      <div class="panel center">
+        <div class="kicker">A StudioTwin MCP field study</div>
+        <h1>Stillwater</h1>
+        <p class="lede">A blue-hour cypress swamp, made from nothing but prompts. Claude Opus directed it end to end through StudioTwin MCP: the concepts, a 16K sky, the meshes, the materials and the sound. The trees, the water and the wildlife are grown and animated in code.</p>
+        <a class="hero-cta" href="https://studiotwin.ai/mcp" target="_blank" rel="noopener">Built end to end with StudioTwin MCP <i>↗</i></a>
+        <div class="scrollhint"><span>Scroll to drift</span><i></i></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="1">
+      <div class="panel left">
+        <div class="kicker"><b>01</b> · Concept</div>
+        <h2>It began with a single frame.</h2>
+        <p>The agent watched an 18-second capture of a swamp and wrote down what made it work: warm mauve dusk above, cold teal fog below, a mirror of black water. Then it asked <em>ConceptLab</em> to paint it.</p>
+        <p>An <em>edit</em> on the same Concept set the palette: dusty mauve dusk bleeding into the fog. That frame became the art direction for everything that followed.</p>
+        <figure class="duo">
+          <div><img src="img/keyart_v1.jpg" alt="Key art v1" loading="lazy"><figcaption>generate</figcaption></div>
+          <div><img src="img/keyart_v2.jpg" alt="Key art v2" loading="lazy"><figcaption>edit · mauve dusk</figcaption></div>
+        </figure>
+        <div class="call"><span class="fn">studiotwin_conceptlab_create_and_generate</span><span class="fn">studiotwin_conceptlab_edit</span><span class="meta">world · 2560×1440 · gpt-image-2</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="2">
+      <div class="panel right">
+        <div class="kicker"><b>02</b> · Environment</div>
+        <h2>A painted sky, wrapped all the way around.</h2>
+        <p>The mauve clouds came straight from a written brief: <em>text-to-environment-map</em> painted the whole 360° sky in one pass, a ConceptLab edit added soft high cloud to the empty upper sky, and <em>environment-map-upscale-cpu</em> took the result to 16K.</p>
+        <p>The sky shows at 8K on desktop and 4K on phones, graded to blue hour in the shader. The same panorama lights every surface and fills the reflections on the water. The moon is drawn in-engine, low over the channel.</p>
+        <figure class="duo">
+          <div><img src="img/sky_plate.jpg" alt="Raw text-to-environment-map sky" loading="lazy"><figcaption>text-to-environment-map · raw 360°</figcaption></div>
+          <div><img src="img/sky_pano.jpg" alt="The 360 sky as shipped" loading="lazy"><figcaption>with the high cloud added · the sky as shipped (8K)</figcaption></div>
+        </figure>
+        <div class="call"><span class="fn">text-to-environment-map</span><span class="fn">conceptlab edit</span><span class="fn">environment-map-upscale-cpu</span><span class="meta">prompt → 360° → 16K HDR</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="3">
+      <div class="panel left">
+        <div class="kicker"><b>03</b> · Trees</div>
+        <h2>The trees were grown, not scanned.</h2>
+        <p>Thin limbs and a thousand leaves are the hardest thing to reconstruct from one image. So the forest is <em>constructed</em>: a grower builds bald cypress, water tupelo and bleached snags, limb by limb, with flared buttresses and knees along the roots.</p>
+        <p>StudioTwin dresses them. The bark is a <em>text-to-material</em> set, and the foliage sprays and Spanish moss are ConceptLab cards. Every spray and strand moves in the same wind, and the moss swings like cloth.</p>
+        <p>Distance never swaps in a different tree. Each one is grown once and thinned for range: the same limbs with fewer sides, and fewer, broader sprays that soften into the fog.</p>
+        <figure class="duo">
+          <div><img src="img/cypress_concept.jpg" alt="Cypress concept" loading="lazy"><figcaption>ConceptLab cypress · the silhouette</figcaption></div>
+          <div class="stat"><b>12</b><span>grown variants · 3 levels of detail</span><b>0.25&nbsp;s</b><span>to grow the forest</span></div>
+        </figure>
+        <div class="call"><span class="fn">text-to-material</span><span class="fn">studiotwin_conceptlab_generate</span><span class="meta">bark · foliage · moss cards</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="4">
+      <div class="panel right">
+        <div class="kicker"><b>04</b> · Materials</div>
+        <h2>Surfaces, not guesses.</h2>
+        <p>Mud banks, cypress bark and teak decking all started as a sentence. <em>text-to-material</em> returned seamless PBR sets: albedo, normal, roughness and height.</p>
+        <p>Lily pads are objects, not surfaces, so a tiling wall of pads was the wrong tool. The agent drew a guide from the pad mesh's own UV layout, with the outline, notch and veins where they land. ConceptLab painted a real pad over that guide, the agent fitted it back onto the UVs, and <em>image-to-material</em> turned it into a single-pad PBR set.</p>
+        <div class="swatches">
+          <figure><img src="img/mat_mud.jpg" alt="Swamp mud" loading="lazy"><figcaption>Swamp mud</figcaption></figure>
+          <figure><img src="img/mat_bark.jpg" alt="Cypress bark" loading="lazy"><figcaption>Cypress bark</figcaption></figure>
+          <figure><img src="img/mat_lilypad.jpg" alt="Lily pad from a UV guide" loading="lazy"><figcaption>Lily pad · UV-guided</figcaption></figure>
+          <figure><img src="img/mat_deck.jpg" alt="Teak deck" loading="lazy"><figcaption>Teak deck</figcaption></figure>
+        </div>
+        <div class="call"><span class="fn">text-to-material</span><span class="fn">image-to-material</span><span class="meta">tiling surfaces · UV-guided objects</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="5">
+      <div class="panel left">
+        <div class="kicker"><b>05</b> · Hero asset</div>
+        <h2>Meet No.&nbsp;86.</h2>
+        <p>A small pilothouse boat: white hull, navy boot stripe, warm light in the cabin. ConceptLab drew it on a neutral backdrop, and <em>Tripo v3.1 detailed</em> turned that into a 54k-face mesh with 4K PBR.</p>
+        <p>The agent measured the hull in Blender to find the bow, the waterline and the cabin volume. It then lit the cabin windows from inside with a shader.</p>
+        <figure class="duo">
+          <div><img src="img/boat_concept.jpg" alt="Boat concept" loading="lazy"><figcaption>Concept</figcaption></div>
+          <div class="stat"><b>54,127</b><span>faces</span><b>4K</b><span>PBR texture set</span></div>
+        </figure>
+        <div class="call"><span class="fn">tripo-image-to-3d-mesh</span><span class="meta">v3.1 · detailed geometry + texture</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="6">
+      <div class="panel right">
+        <div class="kicker"><b>06</b> · Wildlife</div>
+        <h2>Heron Bend.</h2>
+        <p>Every swamp needs a resident. The great blue heron went from concept to mesh, then through <em>tripo-auto-rig</em> for a bird skeleton. The agent repaired the skin weights in Blender and animated it there: it breathes, scans the water and strikes.</p>
+        <p>The bend is lived in. A stilt cabin and a fishing shack glow from inside, and lanterns and the HERON BEND sign swing in the breeze; each started as a ConceptLab concept. Fish chase the boat, dart ahead and peel away. Swifts wheel overhead as a flock, and now and then a line of waders crosses the channel. Fireflies drift over the water, and the surface is never still: slow swell, gusts, and rings where something touches it.</p>
+        <figure class="duo">
+          <div><img src="img/heron_concept.jpg" alt="Heron concept" loading="lazy"><figcaption>Concept</figcaption></div>
+          <div class="stat"><b>76</b><span>bones · auto-rigged</span><b>2</b><span>hand-keyed actions</span></div>
+        </figure>
+        <div class="call"><span class="fn">tripo-auto-rig</span><span class="fn">tripo-image-to-3d-mesh</span><span class="meta">heron · cabins · sign · lanterns · fish</span></div>
+      </div>
+    </section>
+
+    <section class="chapter solo" data-ch="7" aria-label="The heron, uninterrupted">
+      <div class="panel solo-panel"></div>
+    </section>
+
+    <section class="chapter" data-ch="8">
+      <div class="panel left">
+        <div class="kicker"><b>07</b> · Sound</div>
+        <h2>You can hear it, too.</h2>
+        <p>Frogs, crickets, a far-off owl, the putter of an outboard, a heron's squawk, a sign creaking on its chains, a fish splash and wingbeats. Each one came from a single line of text through <em>text-to-sound-effect</em>, as seamless loops where needed.</p>
+        <button class="pill" id="story-sound">Turn the sound on</button>
+        <div class="call"><span class="fn">text-to-sound-effect</span><span class="meta">8 clips · 2 loops</span></div>
+      </div>
+    </section>
+
+    <section class="chapter" data-ch="9">
+      <div class="panel center ledger">
+        <div class="kicker"><b>08</b> · The ledger</div>
+        <h2>One agent. One afternoon.</h2>
+        <div class="numbers">
+          <div><b id="n-calls">—</b><span>StudioTwin generations</span></div>
+          <div><b id="n-credits">—</b><span>credits · <em id="n-usd">$—</em></span></div>
+          <div><b>0</b><span>hand-modelled assets</span></div>
+          <div><b id="n-iter">—</b><span>concept iterations</span></div>
+        </div>
+        <p class="small">USD at StudioTwin's published rate of 50 credits per dollar. Every account starts with free monthly credits. <a href="https://studiotwin.ai/mcp" target="_blank" rel="noopener">studiotwin.ai/mcp ↗</a></p>
+      </div>
+    </section>
+
+    <section class="chapter finale" data-ch="10">
+      <div class="panel center endcard">
+        <img class="end-mark" src="img/studiotwin-mcp.svg" alt="StudioTwin" width="54" height="54">
+        <div class="made">Made with</div>
+        <div class="st-word">StudioTwin <span>MCP</span></div>
+        <div class="meridian"></div>
+        <div class="byline">Claude Opus × StudioTwin · by RealTwin</div>
+        <div class="end-actions">
+          <a class="cta-main" id="cta-main" href="https://studiotwin.ai/mcp" target="_blank" rel="noopener"><span>Start building at studiotwin.ai/mcp</span><i>↗</i></a>
+          <button class="helm" id="btn-play"><span>Take the helm</span><i>→</i></button>
+        </div>
+        <div class="end-install"><span>Give your agent the toolbox</span><code>npx skills add realtwin/studiotwin-mcp-skill</code></div>
+        <div class="keys-hint"><span class="kh-keys"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> to steer · drag to look</span><span class="kh-touch">Stick to steer · drag to look</span><span class="kh-sep"> · </span><a class="journal-link" href="journal.html">Read the production journal</a></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- chapter progress rail -->
+  <nav id="rail" aria-hidden="true"></nav>
+
+  <!-- ============ PLAY HUD ============ -->
+  <div id="hud">
+    <div class="compass"><div class="ticks" id="ticks"></div><div class="heading"><span id="hdg">351°</span></div></div>
+    <div class="loc">
+      <div class="kicker">Exploring Stillwater</div>
+      <div class="loc-title" id="loc-title">Heron bend</div>
+      <div class="loc-sub" id="loc-sub">Leave a little room for the wild.</div>
+      <div class="tele"><div><b id="kn">0.0</b><span>knots</span></div><i></i><div class="st"><em id="mode-dot"></em><span id="mode">Guided drift</span></div><div class="thr"><s id="thr"></s></div></div>
+    </div>
+    <div class="keys">
+      <span><kbd>W</kbd><kbd>S</kbd> throttle</span>
+      <span><kbd>A</kbd><kbd>D</kbd> steer</span>
+      <span><kbd class="m">⟲</kbd> drag to look</span>
+      <span><kbd>P</kbd> photo</span>
+      <span><kbd>Esc</kbd> story</span>
+    </div>
+    <div class="br">
+      <a class="badge" href="https://studiotwin.ai/mcp" target="_blank" rel="noopener"><img src="img/studiotwin-mcp.svg" alt="" width="18" height="18"><span>Made with</span> StudioTwin MCP <i>↗</i></a>
+      <span id="fps">— fps</span>
+    </div>
+    <div id="egg" aria-live="polite">
+      <div class="egg-k">Easter egg · found</div>
+      <div class="egg-t">Captain Quack</div>
+      <p>One ConceptLab prompt, one Tripo mesh, one generated squeak. He's been waiting at the bend the whole time.</p>
+      <a href="https://studiotwin.ai/mcp" target="_blank" rel="noopener">Make your own with StudioTwin MCP <i>↗</i></a>
+    </div>
+    <div id="toast"><span class="dot"></span><span id="toast-text">Discovered · Heron bend</span></div>
+    <div id="touch">
+      <div class="stick" id="stick"><i></i></div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stillwater — Production journal</title><meta name="robots" content="noindex"></head>
+<body><main id="j">
+<a class="back" href="./">← Back to Stillwater</a>
+<h1>Stillwater — built with Opus + StudioTwin MCP</h1>
+<h3>Production journal</h3>
+<h2>The story, expanded</h2>
+<p>The site tells this in eleven short beats. Here is the long version.</p>
+<p><strong>00 · Stillwater.</strong> The brief was an 18-second capture of a blue-hour swamp: warm mauve sky, cold teal fog on black mirror water, bald cypresses and a small white boat with a lit cabin. The goal was to rebuild that mood as a real-time world whose assets all come from StudioTwin, and then hand the boat to the viewer.</p>
+<p><strong>01 · Concept.</strong> Before any geometry existed, the agent broke down what made the reference work and asked ConceptLab for a key frame. It then refined that frame with an <code>edit</code> on the same Concept: dusty mauve dusk, sky bleeding into the fog. Sky colour, fog tint and grade were all checked against this frame.</p>
+<p><strong>02 · Environment.</strong> The sky came straight from a written brief. <code>text-to-environment-map</code> painted the whole 360° of soft, creamy mauve cloud in one pass; a ConceptLab <code>edit</code> filled the empty upper sky with high cloud, merged back only where it was needed; and <code>environment-map-upscale-cpu</code> lifted the panorama to 16384×8192 HDR. The dome shows it at 8K on desktop and 4K on phones, with a blue-hour split-tone grade in the sky shader: indigo shadows, dusty-rose cloud tops. The 2K HDR also lights every surface and fills every reflection. The moon is drawn in-engine, low over the channel.</p>
+<p><strong>03 · Trees.</strong> Trees are the worst subject for single-image 3D reconstruction: thin limbs, holes of sky and thousands of leaves. So the forest is <em>constructed</em>.
+- <strong>Growth.</strong> A species table (bald cypress, water tupelo, bleached snag) drives a recursive grower in code. It builds the flared buttress, crooked limbs, flat broken crowns, and knees clustered along the root lines.
+- <strong>Dressing.</strong> StudioTwin supplies the surfaces: a <code>text-to-material</code> cypress bark, plus ConceptLab foliage sprays and Spanish-moss strands keyed into alpha cards.
+- <strong>Motion.</strong> Travelling gusts bend trunks, branches and sprays, and the moss swings and lifts like cloth.
+- <strong>Scale.</strong> Twelve grown variants fill the banks, each in three levels of detail. The branch skeleton comes from one seeded stream that no detail setting touches, so a tree seen from far away has exactly the limbs it will have up close. Distance only decimates: fewer tube sides and rings, fewer and broader foliage cards that dissolve into the fog. Bands switch with hysteresis, so nothing pops.</p>
+<p><strong>04 · Materials.</strong> Mud, bark, lily pads and teak decking each started as one sentence to <code>text-to-material</code>, which returned seamless PBR sets.</p>
+<p><strong>05 · No. 86.</strong> The hero boat is a ConceptLab object concept turned into a 54k-face Tripo mesh with 4K PBR. Blender measurements located the bow, the waterline and the cabin volume, so the cabin windows could be lit from inside by a shader.</p>
+<p><strong>06 · Heron Bend.</strong> The great blue heron went from concept to mesh, then through <code>tripo-auto-rig</code> with an avian skeleton (76 bones). Its skin weights were cleaned up in Blender, where two actions were keyed: an idle (breathing, scanning, a head tilt, a feather ruffle) and a strike. The bend is lived in, too:
+- <strong>Buildings.</strong> A stilt cabin and a fishing shack glow from inside.
+- <strong>Wind.</strong> Lanterns and a hanging HERON BEND sign swing in the same wind as the trees.
+- <strong>Water.</strong> Each fish is its own agent. It chases a slot that slides from the bow to the flanks, sprints when it falls behind, peels off to investigate and races back, keeps clear of the hull and banks into its turns. Now and then one leaps.
+- <strong>Air.</strong> Birds are dusk silhouettes built and flown in code: a flock of swifts (boids with flap bursts, glides and banking) and, now and then, a line of waders with slow wingbeats, necks tucked and legs trailing. Fireflies drift low over the banks and the open water, each breathing and flashing on its own rhythm.</p>
+<p>The cabin, shack, sign, lanterns and fish are ConceptLab concepts turned into Tripo meshes.</p>
+<p><strong>07 · The bird alone.</strong> For a few seconds every overlay fades and the camera settles on the heron's profile while it hunts.</p>
+<p><strong>08 · Sound.</strong> These are all StudioTwin <code>text-to-sound-effect</code> clips:
+- frogs, crickets and a far owl
+- the outboard
+- the heron's croak
+- a sign creaking on its chains
+- a fish splash
+- wingbeats</p>
+<p>Sound unlocks on the first tap, so it works on phones as well as desktops.</p>
+<p><strong>09 · The ledger.</strong> Every generation and credit, pulled live from the job list. USD is at StudioTwin's rate of 50 credits per dollar (<code>CREDITS_PER_DOLLAR</code> in the StudioTwin API).</p>
+<p><strong>10 · Made with StudioTwin MCP.</strong> The end card sends people to studiotwin.ai/mcp, or hands them the boat. Take the helm: there's something yellow bobbing just ahead.</p>
+<p>Built by an AI agent (Claude Opus) driving <a href="https://studiotwin.ai/mcp">StudioTwin MCP</a> end to end.</p>
+<hr />
+<h2>Segments</h2>
+<h3>Reference</h3>
+<ul>
+<li>Source: a 17.9 s, 60 fps capture.</li>
+<li>What makes the look:</li>
+<li>a two-layer atmosphere: a warm mauve sky over a teal height fog lying on the water</li>
+<li>near-black mirror water with moonlight on it</li>
+<li>a bald-cypress tunnel with buttresses, flat crowns, moss and knees</li>
+<li>a white cabin boat, "86", with amber windows</li>
+<li>a teal/magenta grade with bloom and vignette</li>
+</ul>
+<h3>Environment</h3>
+<table>
+<thead>
+<tr>
+<th>Piece</th>
+<th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Art direction</td>
+<td>ConceptLab <code>create_and_generate</code> (world, 2560×1440) → <code>edit</code> on the same Concept</td>
+</tr>
+<tr>
+<td>Sky + lighting</td>
+<td><code>text-to-environment-map</code> (360°, from a detailed prompt) → ConceptLab <code>edit</code> for the upper sky → <code>environment-map-upscale-cpu</code> (16384×8192 HDR); dome at 8K/4K with a blue-hour grade in TSL; low moon and horizon fog band drawn in the sky node</td>
+</tr>
+<tr>
+<td>Channel and banks</td>
+<td>One analytic meandering channel drives terrain, tree scatter, story camera, collisions and the heron's spot</td>
+</tr>
+<tr>
+<td>Water</td>
+<td>Planar reflection node with a crisp mirror around the boat, 9-octave ripples plus drifting wind patches and expanding drop rings, Fresnel, anisotropic moon glitter that thins out with distance, the boat wake, lamp spill, and a depth-faded shoreline so wet mud shows through at the edge</td>
+</tr>
+<tr>
+<td>Atmosphere</td>
+<td>Exponential height fog (teal pooling on the water, mauve with altitude, forward scatter toward the moon); fireflies as breathing amber-to-lime orbs with a hot core and a halo</td>
+</tr>
+</tbody>
+</table>
+<h3>Trees (constructed)</h3>
+<ul>
+<li><strong>Grower (<code>trees.js</code>).</strong> Per-species parameters (trunk flare, lean, limb angles, crown shape, knee count), a recursive branch walk, and swept tubes with bark UVs.</li>
+<li><strong>Cypress:</strong> flat foliage pads in the top zone.</li>
+<li><strong>Tupelo:</strong> a swollen base and an open crown.</li>
+<li><strong>Snag:</strong> bleached, broken and leafless.</li>
+<li><strong>Dressing.</strong></li>
+<li>Bark is StudioTwin <code>text-to-material</code>, darkening and wetting toward the waterline in the shader.</li>
+<li>Foliage and moss are ConceptLab card concepts, keyed to clean alpha and cut out with a screen-space sharpened edge.</li>
+<li><strong>Wind (TSL).</strong></li>
+<li>Each vertex carries its height and branch-level weights.</li>
+<li>Travelling gust bands sweep across the swamp. Trunks sway slowly, limbs faster and sprays fastest.</li>
+<li>Moss strands swing and lift like cloth.</li>
+<li><strong>Placement.</strong></li>
+<li>Twelve variants (6 cypress, 3 tupelo, 3 snag), each in near, mid and far detail from one shared skeleton, are instanced across the banks.</li>
+<li>Trees at the water's edge and along the camera path are kept low so the sky over the channel stays open.</li>
+<li>A sight corridor keeps the moon clear in the channel shot.</li>
+<li>The whole forest is grown at load in about a quarter of a second.</li>
+</ul>
+<h3>Key meshes</h3>
+<table>
+<thead>
+<tr>
+<th>Asset</th>
+<th>Pipeline</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Boat "86"</td>
+<td>ConceptLab → <code>tripo-image-to-3d-mesh</code> v3.1 detailed</td>
+<td>54k faces, 4K PBR, normalised in Blender, cabin glass lit by shader</td>
+</tr>
+<tr>
+<td>Heron</td>
+<td>ConceptLab → Tripo → <code>tripo-auto-rig</code></td>
+<td>76 bones, weights cleaned and two actions keyed in Blender</td>
+</tr>
+<tr>
+<td>Stilt cabin, fishing shack</td>
+<td>ConceptLab → Tripo</td>
+<td>fronts turned to the channel; window glow keyed from their own textures plus interior lights</td>
+</tr>
+<tr>
+<td>HERON BEND sign, lanterns</td>
+<td>ConceptLab → Tripo</td>
+<td>the sign board swings about its bracket in TSL; lanterns are two-axis pendulums with point lights</td>
+</tr>
+<tr>
+<td>Fish</td>
+<td>ConceptLab → Tripo</td>
+<td>TSL body wave, under-water tint, caustics and refraction wobble; each fish steers as its own agent around the boat</td>
+</tr>
+<tr>
+<td>Swifts, waders</td>
+<td>built in code</td>
+<td>articulated two-segment wings, boids flocking, flap-and-glide</td>
+</tr>
+<tr>
+<td>Ridge</td>
+<td>ConceptLab → Tripo</td>
+<td>skyline silhouettes beyond the fog</td>
+</tr>
+<tr>
+<td>Captain Quack</td>
+<td>ConceptLab → Tripo + a squeak</td>
+<td>the easter egg</td>
+</tr>
+</tbody>
+</table>
+<p>Every mesh passed through a scripted Blender step: normalise, orient, decimate, Draco. The orientation of each prop was read from orthographic renders along its axes, and the placement code uses those readings.</p>
+<h3>Materials</h3>
+<p><code>text-to-material</code> produced mud bank, cypress bark ×2, teak deck and lily/duckweed, each as tileable 1024² PBR. The terrain uses the mud as a node material that turns dark and glossy at the waterline.</p>
+<p>Lily pads are single objects, so they got a single-object pipeline: the pad mesh's UV layout became a guide image, a ConceptLab <code>edit</code> painted a pad onto it, and <code>image-to-material</code> turned that into a full PBR set that lands exactly on the pad's UVs. The Spanish moss went the same way: a ConceptLab <code>edit</code> turned the strand card dark, wet and slimy, keyed back to clean alpha.</p>
+<h3>Animation</h3>
+<ul>
+<li><strong>Heron:</strong> idle and strike actions.</li>
+<li><strong>Boat:</strong> bob and roll.</li>
+<li><strong>Wind-driven motion:</strong> trees, moss, lanterns and the sign all share one gust field.</li>
+<li><strong>Wildlife:</strong> fish chasing the boat and leaping, a swift flock, passing waders, fireflies.</li>
+<li><strong>Story camera:</strong> each chapter is a held shot in the boat's frame and keeps drifting; a lens shift keeps the subject clear of the text.</li>
+<li><strong>Play mode:</strong> the camera blends into a chase cam with collisions.</li>
+</ul>
+<h3>Sound</h3>
+<p><code>text-to-sound-effect</code> supplied these clips:
+- <strong>Loops:</strong> ambience, outboard
+- <strong>One-shots:</strong> heron call, reveal swell, squeak, creak, splash, wings</p>
+<p>The outboard's pitch follows the throttle. The creak's volume follows the camera's distance from the sign and lanterns, and each splash is timed to a fish leap.</p>
+<h3>Engine</h3>
+<ul>
+<li><strong>Stack:</strong> three.js r186 on <strong>WebGPURenderer</strong>, with an automatic WebGL2 fallback. Shading and post are written as <strong>TSL node materials</strong>, with no hand-written GLSL.</li>
+<li><strong>Post pipeline:</strong> a 4× MSAA scene pass with alpha-to-coverage on foliage and moss, NaN/HDR sanitise, a soft anamorphic-style lens (highlight streaks, halation and a de-speckle pass that calms sub-pixel sparkle), bloom, a split-tone grade with vignette, then SMAA on the graded frame. The story camera follows a smoothed scroll value so touch scrolling glides.</li>
+<li><strong>Performance:</strong> a Mobile tier (fewer mid/far trees, shorter detail ranges, fewer fish and birds, 4K sky), adaptive resolution, and a Max tier.</li>
+<li><strong>Loading:</strong> a staged progress bar that tracks downloads, world build, per-object shader compile and first frame, so it never claims 100 % early.</li>
+<li><strong>Build:</strong> Vite, Lenis scroll.</li>
+</ul>
+<h2>What to take away</h2>
+<ul>
+<li><strong>ConceptLab is the art-direction spine.</strong> Every mesh, card and sky decision traces back to an approved frame, and an <code>edit</code> on the same Concept keeps composition while fixing what's wrong.</li>
+<li><strong>Use image-to-3D where it shines: solid objects.</strong> Boats, buildings, signs, birds and fish reconstruct well. For trees, combine StudioTwin surfaces (materials and cards) with procedural growth.</li>
+<li><strong>Tripo meshes are production-usable after a scripted Blender pass.</strong> The boat's atlas even kept the "86".</li>
+<li><strong>Render, critique, patch, re-render.</strong> Every frame was rendered headless, compared with a vision model against the reference, fixed and rendered again.</li>
+</ul>
+<h2>Build your own</h2>
+<p>Give your agent the same toolbox:</p>
+<pre><code class="language-bash">npx skills add realtwin/studiotwin-mcp-skill
+</code></pre>
+<p>Then connect StudioTwin MCP at <strong><a href="https://studiotwin.ai/mcp">studiotwin.ai/mcp</a></strong> and ask for a world. Works with Claude Code, Cursor, Codex, Gemini and any agent that supports skills.</p>
+<h2>Process gallery</h2>
+<div class="gallery"><figure><a href="journal/00_01_keyart_v1.jpg" target="_blank"><img src="journal/00_01_keyart_v1.jpg" loading="lazy" alt="Key art · generate"></a><figcaption>Key art · generate</figcaption></figure><figure><a href="journal/01_02_keyart_v2_mauve.jpg" target="_blank"><img src="journal/01_02_keyart_v2_mauve.jpg" loading="lazy" alt="Key art · edit → mauve dusk"></a><figcaption>Key art · edit → mauve dusk</figcaption></figure><figure><a href="journal/02_03_objects.jpg" target="_blank"><img src="journal/02_03_objects.jpg" loading="lazy" alt="Object concepts · boat, cypress, heron"></a><figcaption>Object concepts · boat, cypress, heron</figcaption></figure><figure><a href="journal/03_04_materials.jpg" target="_blank"><img src="journal/03_04_materials.jpg" loading="lazy" alt="text-to-material × 4"></a><figcaption>text-to-material × 4</figcaption></figure><figure><a href="journal/04_08_envmap_keyart.jpg" target="_blank"><img src="journal/04_08_envmap_keyart.jpg" loading="lazy" alt="image-to-environment-map from key art v2"></a><figcaption>image-to-environment-map from key art v2</figcaption></figure><figure><a href="journal/05_07_meshes_blender.jpg" target="_blank"><img src="journal/05_07_meshes_blender.jpg" loading="lazy" alt="Tripo meshes · Blender Cycles previews"></a><figcaption>Tripo meshes · Blender Cycles previews</figcaption></figure><figure><a href="journal/06_b3_concepts.jpg" target="_blank"><img src="journal/06_b3_concepts.jpg" loading="lazy" alt="Concepts · snag, tupelo, ridge (+ the easter egg)"></a><figcaption>Concepts · snag, tupelo, ridge (+ the easter egg)</figcaption></figure><figure><a href="journal/07_sheet.jpg" target="_blank"><img src="journal/07_sheet.jpg" loading="lazy" alt="Meshes · Tripo → Blender normalise/decimate"></a><figcaption>Meshes · Tripo → Blender normalise/decimate</figcaption></figure><figure><a href="journal/08_sheet.jpg" target="_blank"><img src="journal/08_sheet.jpg" loading="lazy" alt="Heron · auto-rig, idle and strike poses"></a><figcaption>Heron · auto-rig, idle and strike poses</figcaption></figure><figure><a href="journal/09_sky_preview.jpg" target="_blank"><img src="journal/09_sky_preview.jpg" loading="lazy" alt="Sky · open-horizon HDR"></a><figcaption>Sky · open-horizon HDR</figcaption></figure><figure><a href="journal/10_aaa1_concepts.jpg" target="_blank"><img src="journal/10_aaa1_concepts.jpg" loading="lazy" alt="Concepts · cabin, shack, sign, lantern, fish, egret, foliage and moss cards"></a><figcaption>Concepts · cabin, shack, sign, lantern, fish, egret, foliage and moss cards</figcaption></figure><figure><a href="journal/11_sheet.jpg" target="_blank"><img src="journal/11_sheet.jpg" loading="lazy" alt="Meshes · life on the bend"></a><figcaption>Meshes · life on the bend</figcaption></figure><figure><a href="journal/12_it5.jpg" target="_blank"><img src="journal/12_it5.jpg" loading="lazy" alt="Grown trees · cypress, tupelo, snag"></a><figcaption>Grown trees · cypress, tupelo, snag</figcaption></figure><figure><a href="journal/13_sheet.jpg" target="_blank"><img src="journal/13_sheet.jpg" loading="lazy" alt="In scene · cabin, shack, sign, boat and fish"></a><figcaption>In scene · cabin, shack, sign, boat and fish</figcaption></figure><figure><a href="journal/14_a7_5.jpg" target="_blank"><img src="journal/14_a7_5.jpg" loading="lazy" alt="In scene · Heron Bend"></a><figcaption>In scene · Heron Bend</figcaption></figure></div>
+<h2>StudioTwin call ledger</h2>
+<p>Every generation job behind the initial build, pulled from <code>studiotwin_list_my_jobs</code>. Want your own? <a href="https://studiotwin.ai/mcp">studiotwin.ai/mcp</a> · <code>npx skills add realtwin/studiotwin-mcp-skill</code></p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>function</th>
+<th>status</th>
+<th>cost</th>
+<th>prompt / input</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>23</td>
+<td>Cinematic key art of a flooded bald-cypress swamp at blue-hour dusk. A small white cabin boat with warm amber-…</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>Single small recreational swamp cabin boat, three-quarter front view from slightly above, isolated and fully v…</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>Single mature bald cypress tree, full tree visible from wide flared buttress roots to the flat-topped layered …</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A single great blue heron standing upright on one leg, side view, full body visible from beak to feet, slate b…</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>text-to-environment-map</code></td>
+<td>done</td>
+<td>20</td>
+<td>360 degree panorama of a flooded bald cypress swamp at blue-hour dusk, billowing mauve dusty-rose and peach cl…</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>text-to-material</code></td>
+<td>done</td>
+<td>12</td>
+<td>Bald cypress tree bark, fibrous vertical stringy strips, deep furrows, damp dark reddish-brown to gray, patche…</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>text-to-material</code></td>
+<td>done</td>
+<td>12</td>
+<td>Wet swamp mud bank with dark silty soil, decaying cypress needles, small roots, patches of bright green duckwe…</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>text-to-material</code></td>
+<td>done</td>
+<td>12</td>
+<td>Weathered teak boat deck planks, gray-brown oiled wood with dark caulking seams, light water stains and wear</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>25</td>
+<td>Keep the exact composition, trees, boat and water. Regrade the sky from hot sunset coral to a cooler, desatura…</td>
+</tr>
+<tr>
+<td>10</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>24</td>
+<td>Remove all the hanging Spanish moss and remove the separate cypress knees around the base. Keep the exact same…</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>12</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>Small outboard boat motor idling and puttering steadily, low quiet rumble, seamless loop, no water splashes</td>
+</tr>
+<tr>
+<td>13</td>
+<td><code>text-to-material</code></td>
+<td>done</td>
+<td>12</td>
+<td>Floating green lily pads packed together on dark swamp water, top-down view, round notched glossy leaves with …</td>
+</tr>
+<tr>
+<td>14</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>16</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>Soft deep cinematic swell with airy shimmer, magical reveal chime, gentle and elegant, fades out</td>
+</tr>
+<tr>
+<td>17</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>Great blue heron croak call, single harsh prehistoric squawk, then wings flapping away over water</td>
+</tr>
+<tr>
+<td>18</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>9</td>
+<td>Night swamp ambience, seamless loop: dense chorus of frogs and crickets, distant owl, soft gentle water lappin…</td>
+</tr>
+<tr>
+<td>19</td>
+<td><code>image-to-environment-map</code></td>
+<td>done</td>
+<td>25</td>
+<td>360 panorama of a flooded bald cypress swamp at dusk, dusty mauve and lilac clouds with peach rims, small brig…</td>
+</tr>
+<tr>
+<td>20</td>
+<td><code>text-to-environment-map</code></td>
+<td>done</td>
+<td>20</td>
+<td>360 degree equirectangular panorama, cypress swamp at late dusk, sky filled with billowing dusty mauve, plum a…</td>
+</tr>
+<tr>
+<td>21</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>17</td>
+<td>A tall dead bald-cypress snag from a Louisiana swamp: bleached silver-grey weathered trunk with a flared buttr…</td>
+</tr>
+<tr>
+<td>22</td>
+<td><code>tripo-rig-check</code></td>
+<td>failed</td>
+<td>0</td>
+<td><em>mesh from the previous step</em></td>
+</tr>
+<tr>
+<td>23</td>
+<td><code>tripo-auto-rig</code></td>
+<td>failed</td>
+<td>45</td>
+<td><em>mesh from the previous step</em></td>
+</tr>
+<tr>
+<td>24</td>
+<td><code>tripo-rig-check</code></td>
+<td>done</td>
+<td>0</td>
+<td><em>mesh from the previous step</em></td>
+</tr>
+<tr>
+<td>25</td>
+<td><code>tripo-auto-rig</code></td>
+<td>failed</td>
+<td>45</td>
+<td><em>mesh from the previous step</em></td>
+</tr>
+<tr>
+<td>26</td>
+<td><code>text-to-environment-map</code></td>
+<td>done</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of an open dusk sky over a perfectly flat calm lake. Dusty mauve and lilac…</td>
+</tr>
+<tr>
+<td>27</td>
+<td><code>tripo-auto-rig</code></td>
+<td>done</td>
+<td>38</td>
+<td><em>mesh from the previous step</em></td>
+</tr>
+<tr>
+<td>28</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>17</td>
+<td>A water tupelo tree from a southern swamp: slim swollen-base trunk, rounded loose crown of dark green glossy l…</td>
+</tr>
+<tr>
+<td>29</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>17</td>
+<td>A long low forested mountain ridge landform as a single terrain chunk, like a tabletop diorama piece: rolling …</td>
+</tr>
+<tr>
+<td>30</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>31</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>32</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>75</td>
+<td></td>
+</tr>
+<tr>
+<td>33</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>Single squeak of a rubber bath duck being squeezed, cute and bright, short, dry, no reverb</td>
+</tr>
+<tr>
+<td>34</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A classic yellow rubber bath duck toy with an orange beak, glossy vinyl, wearing a tiny navy captain hat with …</td>
+</tr>
+<tr>
+<td>35</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td>36</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A small weathered swamp cabin on tall cypress-log stilts: grey silvered cypress plank walls, rusted corrugated…</td>
+</tr>
+<tr>
+<td>37</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A Louisiana bayou fishing shack on low stilts with a short plank jetty in front: board-and-batten walls with p…</td>
+</tr>
+<tr>
+<td>38</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A weathered hand-painted wooden sign board hanging from two short rusty chains from a small iron bracket, crea…</td>
+</tr>
+<tr>
+<td>39</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>An old black iron hurricane lantern with a clear glass chimney, wire guard and a round carry loop on top, a sm…</td>
+</tr>
+<tr>
+<td>40</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A largemouth bass fish, strict side profile view facing left, mouth closed, fins relaxed, olive green with dar…</td>
+</tr>
+<tr>
+<td>41</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>failed</td>
+<td>22</td>
+<td>Several feathery bald cypress sprigs: flat sprays of soft fine yellow-green needles arranged alternately along…</td>
+</tr>
+<tr>
+<td>42</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>failed</td>
+<td>22</td>
+<td>A small cluster of water tupelo leaves on a thin twig: glossy oval dark-green leaves with smooth edges, some y…</td>
+</tr>
+<tr>
+<td>43</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>17</td>
+<td>Long hanging strands of Spanish moss (Tillandsia usneoides): silvery grey-green curly threadlike tangles, laid…</td>
+</tr>
+<tr>
+<td>44</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>Slow rhythmic creak of an old wooden sign swinging on rusty chains in a light wind, outdoors at night, subtle</td>
+</tr>
+<tr>
+<td>45</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>A single small fish jumping out of still swamp water and splashing back in, close, natural, quiet night</td>
+</tr>
+<tr>
+<td>46</td>
+<td><code>text-to-sound-effect</code></td>
+<td>done</td>
+<td>3</td>
+<td>A small flock of wading birds taking off and flying over water, wingbeats receding, distant calls, dusk</td>
+</tr>
+<tr>
+<td>47</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>48</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>49</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>50</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>51</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>52</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A great white egret in flight seen from directly above, wings fully spread flat and symmetric, long neck folde…</td>
+</tr>
+<tr>
+<td>53</td>
+<td><code>text-to-material</code></td>
+<td>done</td>
+<td>12</td>
+<td>Bald cypress tree bark: fibrous, stringy, shallow vertical furrows and long peeling strips, grey-brown with re…</td>
+</tr>
+<tr>
+<td>54</td>
+<td><code>tripo-image-to-3d-mesh</code></td>
+<td>done</td>
+<td>90</td>
+<td></td>
+</tr>
+<tr>
+<td>55</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>Three small sprays of bald cypress foliage lying flat: thin twigs with soft, fine, feathery yellow-green needl…</td>
+</tr>
+<tr>
+<td>56</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>22</td>
+<td>A short leafy twig of a water tupelo tree lying flat: six glossy oval dark-green leaves with smooth edges, one…</td>
+</tr>
+<tr>
+<td>57</td>
+<td><code>concept-lab-img-fn</code></td>
+<td>done</td>
+<td>41</td>
+<td>Wide cinematic photograph of a dramatic dusk sky over an open, flat, empty southern swamp horizon at blue hour…</td>
+</tr>
+<tr>
+<td>58</td>
+<td><code>pano-sticker-placement</code></td>
+<td>done</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>59</td>
+<td><code>pano-stickers</code></td>
+<td>failed</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>60</td>
+<td><code>pano-stickers</code></td>
+<td>failed</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>61</td>
+<td><code>pano-stickers</code></td>
+<td>failed</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>62</td>
+<td><code>pano-sticker-placement</code></td>
+<td>done</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr>
+<td>63</td>
+<td><code>pano-stickers</code></td>
+<td>failed</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>64</td>
+<td><code>pano-stickers</code></td>
+<td>failed</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>65</td>
+<td><code>pano-stickers</code></td>
+<td>done</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp: layered textured clouds al…</td>
+</tr>
+<tr>
+<td>66</td>
+<td><code>environment-map-upscale-cpu</code></td>
+<td>done</td>
+<td>60</td>
+<td></td>
+</tr>
+<tr>
+<td>67</td>
+<td><code>pano-stickers</code></td>
+<td>done</td>
+<td>20</td>
+<td>360 degree equirectangular panorama of a blue-hour dusk sky over a flat open swamp, layered textured clouds, f…</td>
+</tr>
+</tbody>
+</table>
+</main><script type="module">import './src/journal.css';</script></body></html>

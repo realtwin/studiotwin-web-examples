@@ -1,0 +1,54 @@
+{
+ "generations": 57,
+ "credits": 1825,
+ "usd": 36.5,
+ "usdPerCredit": 0.02,
+ "failed": 10,
+ "conceptIterations": 20,
+ "byFunction": {
+  "concept-lab-img-fn": [
+   20,
+   445
+  ],
+  "text-to-environment-map": [
+   3,
+   60
+  ],
+  "text-to-material": [
+   5,
+   60
+  ],
+  "tripo-image-to-3d-mesh": [
+   13,
+   1065
+  ],
+  "text-to-sound-effect": [
+   8,
+   30
+  ],
+  "image-to-environment-map": [
+   1,
+   25
+  ],
+  "tripo-rig-check": [
+   1,
+   0
+  ],
+  "tripo-auto-rig": [
+   1,
+   38
+  ],
+  "pano-sticker-placement": [
+   2,
+   2
+  ],
+  "pano-stickers": [
+   2,
+   40
+  ],
+  "environment-map-upscale-cpu": [
+   1,
+   60
+  ]
+ }
+}
